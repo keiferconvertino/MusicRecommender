@@ -14,6 +14,15 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+### `yarn start-api`
+
+ONLY WORKS IN WINDOWS
+
+Runs the backend in the development mode.\
+Opens in [http://localhost:5000]
+
+The backend will reload if you make edits.\
+
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.\
