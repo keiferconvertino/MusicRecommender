@@ -1,5 +1,12 @@
 .App {
   text-align: center;
+  
+}
+
+body {
+  background-color: #57A357;
+  height: 100%;
+  width: 100%;
 }
 
 .App-logo {
@@ -14,19 +21,81 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color:#4F4F4F;
+  color: #4b8f4b;
   display: flex;
+  width: 100%;
+  height: 10%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+
 }
 
-.App-link {
-  color: #61dafb;
+
+
+div.page-links {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
 }
+
+
+.App-link {
+  color: rgb(255, 255, 255);
+  padding: 0px 15px;
+  display: flex;
+  text-decoration: none;
+  font-weight: bold;
+  font-size:20px;
+  
+}
+
+img.albumCover {
+  height:50px;
+  width:50px;
+  margin-left: 5px;
+}
+
+div.songRecommendation {
+  display:flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  font-size: 20px;
+  color:white;
+}
+
+
+.songInput{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+Button.inputSongSearch {
+  margin-left: 10px;
+}
+
+
+.App-link:hover {
+  color:#4F4F4F;
+}
+div.subheader {
+  width: 100%;
+  background-color: #4b8f4b;
+  padding: 10px 0px 10px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  box-shadow: 0px 1px 5px #5f5f5f;
+}
+
+
 
 @keyframes App-logo-spin {
   from {

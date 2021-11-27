@@ -1,24 +1,31 @@
 import logo from './logo.svg';
+import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
 import './App.css';
+
+import Listeners from './components/listeners/Listeners'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        
+        <header className="App-header">
+          <h1>Music Recommender</h1>
+        </header>
+          <div className="subheader">
+            <div className = 'page-links'>
+              <Link className = 'App-link' to="/">LISTENERS</Link>
+              <Link className = 'App-link' to="/profile">ARTISTS</Link>
+            </div>
+          </div>
+        <Routes>
+          <Route path = "/artists"> 
+          </Route>
+          <Route path = "/" element={<Listeners/>}> 
+          </Route>
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
