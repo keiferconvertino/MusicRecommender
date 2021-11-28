@@ -19,7 +19,8 @@ print(os.getcwd())
 @app.route('/')
 def index():
     root_dir = os.path.dirname(os.getcwd())
-    return send_from_directory(os.path.join(root_dir, 'build'), 'index.html')
+    print(root_dir)
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/backend/getRecommendations', methods = ['GET'])
 def get_recommendations():
