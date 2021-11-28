@@ -54,7 +54,7 @@ def get_recommendations():
     
     recs_json = []
     for (idx,rec) in recs.iterrows():
-        if rec['track_id'] == audioFeatures['id']:
+        if rec['track_id'] == audioFeatures['id'] or len(recs_json) == numRecs:
             continue
         track = spotify.track(rec['track_id'])
         track_json = {
@@ -64,6 +64,7 @@ def get_recommendations():
             'url': track['external_urls']['spotify']
         }
         recs_json.append(track_json)
+        
         
     res = {'name': name, 'artist':artist, 'cover':albumArt, 'recommendations' : recs_json}
     print(res)
