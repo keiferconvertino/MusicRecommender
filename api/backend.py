@@ -15,11 +15,10 @@ columns = ['track_id', 'popularity', 'acousticness', 'danceability', 'liveness',
 spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(creds.client_id, creds.client_secret))
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
-print(os.getcwd())
+
 @app.route('/')
 def index():
-    root_dir = os.path.dirname(os.getcwd())
-    print(root_dir)
+    print(app.static_folder)
     return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/backend/getRecommendations', methods = ['GET'])
