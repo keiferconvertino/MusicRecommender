@@ -5,18 +5,18 @@ import { TextField, Button, Grid, Item, Select, MenuItem, InputLabel, FormContro
 
 function Listeners() {
 
-    const [category,setCategory] = useState([])
+    const [category,setCategory] = useState(0)
 
     const [recommendedSongs,setRecommendedSongs] = useState([])
     const [songsFetched,setSongsFetched] = useState(false)
     const [search, setSearch] = useState([])
-
+    const [numRecs, setNumRecs] = useState(3)
 
 
     const handleClick = async() => {
 
 
-        fetch('/getRecommendations?songName='+search+"&category="+category)
+        fetch('/backend/getRecommendations?songName='+search+"&category="+category+"&numRecs="+numRecs)
         .then(res => res.json()).then(res => {
             setRecommendedSongs(res.recommendations)
             setSearch(res.name + ' - ' + res.artist)
@@ -35,6 +35,10 @@ function Listeners() {
         setSearch(e.target.value)
     }
 
+    function handleNumRecsChange(e) {
+        setNumRecs(e.target.value)
+    }
+
     return (
       <div>
           <h1 className="listenersHeader"> Listeners </h1>
@@ -44,11 +48,19 @@ function Listeners() {
 
 
             <div className="songInput"> 
-            {/* <Grid className = "input" container spacing = {2}>
-                <Grid className="d-flex" item xs > */}
-                    <TextField label = "Enter a Song" id="outlined-basic" onChange={handleSearchChange} value={search} marginRight="2px" color ="success" variant="outlined" />
-                {/* </Grid>
-                <Grid  className="d-flex" marginLeft="2px" item xs> */}
+            {/* <Grid className = "input" container spacing = {2}> */}
+                {/* <Grid className="d-flex" item xs > */}
+                    <div className = "songNameInput">
+                        <TextField label = "Enter a Song" id="outlined-basic" onChange={handleSearchChange} value={search} marginRight="2px" color ="success" variant="outlined" />
+
+                    </div>
+                    <div className = "numRecsInput">
+                        <TextField label = "# of Recs" id="outlined-basic" onChange={handleNumRecsChange} value={numRecs} stylee = {{ marginLeft: 2, width: 30, marginRight : 2}} color ="success" variant="outlined" />
+
+                    </div>
+
+                {/* </Grid> */}
+                {/* <Grid  className="d-flex" marginLeft="2px" item xs> */}
                     <FormControl>
                     <InputLabel color= "success" id="demo-simple-select-label">Category</InputLabel>
                     <Select
@@ -59,6 +71,7 @@ function Listeners() {
                         onChange={handleCatChange}
                         color = "success"
                         label= "Category"
+                        defa
                     >
                         <MenuItem value={0}>All</MenuItem>
                         <MenuItem value={1}>Acoustic</MenuItem>
@@ -102,7 +115,7 @@ function Listeners() {
                   recommendedSongs.map((recommendation,i) => {
                       return (
                           <div className = 'songRecommendation'>
-                              {recommendation.name + " - " + recommendation.artist}
+                              <a href = {recommendation.url}>{recommendation.name + " - " + recommendation.artist}</a>
                               <img className = 'albumCover' alt ='' src = {recommendation.cover}></img>
                           </div>
                       )

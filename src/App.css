@@ -55,7 +55,7 @@ div.page-links {
 img.albumCover {
   height:50px;
   width:50px;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
 div.songRecommendation {
@@ -68,11 +68,35 @@ div.songRecommendation {
   color:white;
 }
 
+div.numRecsInput {
+  margin-left: 10px;
+  width: 100px;
+}
 
+/* unvisited link */
+a:link {
+  color: white;
+}
+
+/* visited link */
+a:visited {
+  color: white;
+}
+
+/* mouse over link */
+a:hover {
+  color: #346e34;
+}
+
+/* selected link */
+a:active {
+  color: #346e34;
+}
 .songInput{
   display: flex;
   justify-content: center;
   align-content: center;
+
 }
 
 Button.inputSongSearch {
