@@ -11,12 +11,12 @@ import os
 CATEGORY_DICT = {0: "All", 1: "Acoustic", 2: "Chill", 3: "Dance", 4: "Happy", 5: "Loud", 6: "A Capella", 7: "Alternative", 8: "Blues", 9: "Classical", 10: "Country", 11: "Dance", 12: "Electronic", 13: "Folk", 14: "Hip-Hop", 15: "Indie", 16: "Jazz", 17: "Movie", 18: "Opera", 19: "Pop", 20: "R&B", 21: "Rap", 22: "Reggae", 23: "Reggaeton", 24: "Rock", 25: "Ska", 26: "Soul", 27: "Soundtrack", 28: "World"}
 # All dataset paths
 print(os.getcwd())
-path_all = "./data/SpotifyFeatures_Cleaned.csv" 
-path_acoustic = "./data/SpotifyFeatures_Cleaned_Acoustic.csv"
-path_chill = "./data/SpotifyFeatures_Cleaned_Chill.csv"
-path_dance = "./data/SpotifyFeatures_Cleaned_Dance.csv"
-path_happy = "./data/SpotifyFeatures_Cleaned_Happy.csv"
-path_loud = "./data/SpotifyFeatures_Cleaned_Loud.csv"
+path_all = "./api/data/SpotifyFeatures_Cleaned.csv" 
+path_acoustic = "./api/data/SpotifyFeatures_Cleaned_Acoustic.csv"
+path_chill = "./api/data/SpotifyFeatures_Cleaned_Chill.csv"
+path_dance = "./api/data/SpotifyFeatures_Cleaned_Dance.csv"
+path_happy = "./api/data/SpotifyFeatures_Cleaned_Happy.csv"
+path_loud = "./api/data/SpotifyFeatures_Cleaned_Loud.csv"
 
 def get_data(csv_path:str)->pd.DataFrame:
   """
