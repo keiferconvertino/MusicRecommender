@@ -1,5 +1,6 @@
 import time
 from flask import Flask, request
+from flask.helpers import send_from_directory
 
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
@@ -17,8 +18,8 @@ app = Flask(__name__, static_folder='../build', static_url_path='/')
 print(os.getcwd())
 @app.route('/')
 def index():
-    print('hello world')
-    return app.send_static_file('index.html')
+    root_dir = os.path.dirname(os.getcwd())
+    return send_from_directory(os.path.join(root_dir, 'build', 'index.html'), filename)
 
 @app.route('/backend/getRecommendations', methods = ['GET'])
 def get_recommendations():
