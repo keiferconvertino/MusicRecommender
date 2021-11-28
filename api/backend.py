@@ -7,13 +7,14 @@ import pandas as pd
 
 import creds
 from model import recommend_listener
+import os
 
 
 columns = ['track_id', 'popularity', 'acousticness', 'danceability', 'liveness','loudness', 'speechiness', 'tempo', 'valence', 'genre', 'artist_name', 'track_name']
 spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(creds.client_id, creds.client_secret))
 
-app = Flask(__name__, static_folder='/build', static_url_path='/')
-
+app = Flask(__name__, static_folder='../build', static_url_path='/')
+print(os.getcwd())
 @app.route('/')
 def index():
     print('hello world')
