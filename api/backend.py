@@ -16,6 +16,7 @@ app = Flask(__name__, static_folder='../build', static_url_path='/')
 
 @app.route('/')
 def index():
+    print('hello world')
     return app.send_static_file('index.html')
 
 @app.route('/backend/getRecommendations', methods = ['GET'])
@@ -45,7 +46,7 @@ def get_recommendations():
     print(audioFeatures)
     df = pd.DataFrame([[audioFeatures['id'], 0, audioFeatures['acousticness'], audioFeatures['danceability'], audioFeatures['liveness'], audioFeatures['loudness'], audioFeatures['speechiness'], audioFeatures['tempo'], audioFeatures['valence'], '', artist, name]], columns=columns)
     print(df)
-    
+
     # model time
     recs = recommend_listener(df, category, numRecs+1)
     
