@@ -33,6 +33,8 @@ def get_recommendations():
         numRecs = int(numRecs)
     else:
         numRecs = 3
+
+    print(songName, category, numRecs)
     tracks = spotify.search(q=songName, type='track')
     id = tracks['tracks']['items'][0]['id']
     name = tracks['tracks']['items'][0]['name']
@@ -40,7 +42,9 @@ def get_recommendations():
     albumArt = tracks['tracks']['items'][0]['album']['images'][0]['url']
     audioFeatures = spotify.audio_features(tracks=[id])[0]
 
+    print(audioFeatures)
     df = pd.DataFrame([[audioFeatures['id'], 0, audioFeatures['acousticness'], audioFeatures['danceability'], audioFeatures['liveness'], audioFeatures['loudness'], audioFeatures['speechiness'], audioFeatures['tempo'], audioFeatures['valence'], '', artist, name]], columns=columns)
+    print(df)
     # model time
     recs = recommend_listener(df, category, numRecs+1)
     
@@ -58,4 +62,5 @@ def get_recommendations():
         recs_json.append(track_json)
         
     res = {'name': name, 'artist':artist, 'cover':albumArt, 'recommendations' : recs_json}
+    print(res)
     return res
