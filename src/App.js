@@ -13,18 +13,21 @@ function App() {
         <header className="App-header">
           <h1>Music Recommender</h1>
         </header>
-          <div className="subheader">
+          {/* <div className="subheader">
             <div className = 'page-links'>
               <Link className = 'App-link' to="/">LISTENERS</Link>
               <Link className = 'App-link' to="/artists">ARTISTS</Link>
             </div>
-          </div>
-        <Routes>
+          </div> */}
+        {/* <Routes>
           <Route path = "/artists" element = {<Artists/>}> 
           </Route>
           <Route path = "/" element={<Listeners/>}> 
           </Route>
-        </Routes>
+        </Routes> */}
+
+        <Artists></Artists>
+        <Listeners></Listeners>
       </div>
     </BrowserRouter>
   );
