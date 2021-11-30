@@ -21,7 +21,7 @@ body {
 }
 
 .App-header {
-  background-color:#4F4F4F;
+  background-color:#2b2b2b;
   color: #4b8f4b;
   display: flex;
   width: 100%;
@@ -68,6 +68,23 @@ div.songRecommendation {
   color:white;
 }
 
+footer {
+  background-color:#4b8f4b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  font-size: calc(10px + 1vmin);
+  color:#ffffff;
+  height: calc(30px + 1vmin);
+
+}
+
+img.popularityFeatures {
+  margin-top: 10px;
+}
+
 div.numRecsInput {
   margin-left: 10px;
   width: 100px;
@@ -105,7 +122,7 @@ Button.inputSongSearch {
 
 
 .App-link:hover {
-  color:#4F4F4F;
+  color:#2b2b2b;
 }
 div.subheader {
   width: 100%;
@@ -116,10 +133,17 @@ div.subheader {
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  box-shadow: 0px 1px 5px #5f5f5f;
+  box-shadow: 0px 1px 5px #2b2b2b;
 }
 
+div.about {
+  width: 70%;
+  display: inline-block;
+}
 
+p.about {
+  font-size: 20px;
+}
 
 @keyframes App-logo-spin {
   from {

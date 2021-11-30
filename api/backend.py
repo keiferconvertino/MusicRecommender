@@ -73,38 +73,38 @@ def get_recommendations():
 
 
 
-@app.route('/backend/getArtistRecommendations', methods = ['GET'])
-def get_artist_recommendations():
-    songName = request.args.get('songName')
-    category = request.args.get('category')
-    if category == "":
-        category = 0
-    else:
-        category = int(category)
-    numRecs = request.args.get('numRecs')
-    if str(numRecs).isdigit():
-        numRecs = int(numRecs)
-    else:
-        numRecs = 3
+# @app.route('/backend/getArtistRecommendations', methods = ['GET'])
+# def get_artist_recommendations():
+#     songName = request.args.get('songName')
+#     category = request.args.get('category')
+#     if category == "":
+#         category = 0
+#     else:
+#         category = int(category)
+#     numRecs = request.args.get('numRecs')
+#     if str(numRecs).isdigit():
+#         numRecs = int(numRecs)
+#     else:
+#         numRecs = 3
 
-    print(songName, category, numRecs)
-    tracks = spotify.search(q=songName, type='track')
-    id = tracks['tracks']['items'][0]['id']
-    name = tracks['tracks']['items'][0]['name']
-    artist = tracks['tracks']['items'][0]['artists'][0]['name']
-    albumArt = tracks['tracks']['items'][0]['album']['images'][0]['url']
-    audioFeatures = spotify.audio_features(tracks=[id])[0]
+#     print(songName, category, numRecs)
+#     tracks = spotify.search(q=songName, type='track')
+#     id = tracks['tracks']['items'][0]['id']
+#     name = tracks['tracks']['items'][0]['name']
+#     artist = tracks['tracks']['items'][0]['artists'][0]['name']
+#     albumArt = tracks['tracks']['items'][0]['album']['images'][0]['url']
+#     audioFeatures = spotify.audio_features(tracks=[id])[0]
 
-    print(audioFeatures)
-    df = pd.DataFrame([[audioFeatures['id'], 0, audioFeatures['acousticness'], audioFeatures['danceability'], audioFeatures['liveness'], audioFeatures['loudness'], audioFeatures['speechiness'], audioFeatures['tempo'], audioFeatures['valence'], '', artist, name]], columns=columns)
-    print(df)
+#     print(audioFeatures)
+#     df = pd.DataFrame([[audioFeatures['id'], 0, audioFeatures['acousticness'], audioFeatures['danceability'], audioFeatures['liveness'], audioFeatures['loudness'], audioFeatures['speechiness'], audioFeatures['tempo'], audioFeatures['valence'], '', artist, name]], columns=columns)
+#     print(df)
 
-    # model time
-    popularity = predict_popularity(df)
-    fig = radar_top_n_song_features(df, category, numRecs)
+#     # model time
+#     popularity = predict_popularity(df)
+#     fig = radar_top_n_song_features(df, category, numRecs)
 
-    html = mpld3.fig_to_html(fig)
-    print(html)
-    res = {'name': name, 'artist':artist, 'cover':albumArt, 'popularity' : popularity}
-    print(res)
-    return res
+#     html = mpld3.fig_to_html(fig)
+#     print(html)
+#     res = {'name': name, 'artist':artist, 'cover':albumArt, 'popularity' : popularity}
+#     print(res)
+#     return res

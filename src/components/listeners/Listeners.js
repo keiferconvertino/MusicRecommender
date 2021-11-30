@@ -112,14 +112,17 @@ function Listeners() {
           </div>
           <div className="recommendedSongs">
               {songsFetched && (
-                  recommendedSongs.map((recommendation,i) => {
-                      return (
-                          <div className = 'songRecommendation'>
-                              <a href = {recommendation.url}>{recommendation.name + " - " + recommendation.artist}</a>
-                              <img className = 'albumCover' alt ='' src = {recommendation.cover}></img>
-                          </div>
-                      )
-                  })
+                  <div>
+                      <h3>Our Recommendations:</h3>
+                    {recommendedSongs.map((recommendation,i) => {
+                        return (
+                            <div className = 'songRecommendation'>
+                                <a href = {recommendation.url}>{recommendation.name + " - " + recommendation.artist}</a>
+                                <img className = 'albumCover' alt ='' src = {recommendation.cover}></img>
+                            </div>
+                        )
+                    })}
+                  </div>
               )}
           </div>
       </div>

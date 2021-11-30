@@ -9,21 +9,21 @@ function Artists() {
 
     const [popularity,setPopularity] = useState([])
     const [popularityFetched,setPopularityFetched] = useState(false)
-    const [search, setSearch] = useState([])
-    const [numRecs, setNumRecs] = useState(3)
+    const [search, setSearch] = useState("Migraine - Moonstar88")
+    const [numRecs, setNumRecs] = useState(100)
 
 
-    const handleClick = async() => {
+    // const handleClick = async() => {
 
 
-        fetch('/backend/getArtistRecommendations?songName='+search+"&category="+category+"&numRecs="+numRecs)
-        .then(res => res.json()).then(res => {
-            setPopularity(res.popularity)
-            setSearch(res.name + ' - ' + res.artist)
-            setPopularityFetched(true)
-            console.log(res)
-        })
-    }
+    //     fetch('/backend/getArtistRecommendations?songName='+search+"&category="+category+"&numRecs="+numRecs)
+    //     .then(res => res.json()).then(res => {
+    //         setPopularity(res.popularity)
+    //         setSearch(res.name + ' - ' + res.artist)
+    //         setPopularityFetched(true)
+    //         console.log(res)
+    //     })
+    // }
 
 
     function handleCatChange(e) {
@@ -104,17 +104,29 @@ function Artists() {
                         <MenuItem value={28}>World</MenuItem>
                     </Select>
                     </FormControl>
-                    <Button className = "inputSongSearch" onClick= {handleClick} variant="contained" color = "success">Get Similar Songs</Button>
+                    <Button className = "inputSongSearch" variant="contained" color = "success">Get Popularity Projection</Button>
                 {/* </Grid>
             </Grid> */}
 
             </div>
           </div>
           <div className="popularity">
-              {popularityFetched && (
+              {/* {popularityFetched && (
                   <h3 className = "popularityNum">{popularity}</h3>
-              )}
+              )} */}
+              <h2 className = "popularityNum">Projected Popularity (out of 100): 48.99</h2>
+              <div className = "popularityDemoImages">
+                <img className = "popularityFeatures" src = "https://i.imgur.com/4yjjc0s.png" ></img>
+                {/* <img className = "popularityFeatures" src = "https://i.imgur.com/aDrfwjT.png" ></img> */}
+
+              </div>
+
           </div>
+
+          <footer>* This is a non-functional example page. 
+                While we have implemented a working version of this page, 
+                it would require an expensive paid tier of web hosting to support the resources our models need.</footer>
+        
       </div>
     );
   }
