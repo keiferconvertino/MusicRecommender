@@ -17,10 +17,10 @@ spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(cr
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
-# @app.route('/')
-# def index():
-#     print(app.static_folder)
-#     return send_from_directory(app.static_folder, 'index.html')
+@app.route('/')
+def index():
+    print(app.static_folder)
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/backend/getRecommendations', methods = ['GET'])
 def get_recommendations():
