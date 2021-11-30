@@ -8,7 +8,8 @@ import pandas as pd
 
 import creds
 from model import recommend_listener
-import os
+from artist_model import radar_top_n_song_features, predict_popularity
+import mpld3
 
 
 columns = ['track_id', 'popularity', 'acousticness', 'danceability', 'liveness','loudness', 'speechiness', 'tempo', 'valence', 'genre', 'artist_name', 'track_name']
@@ -16,10 +17,10 @@ spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(cr
 
 app = Flask(__name__, static_folder='../build', static_url_path='/')
 
-@app.route('/')
-def index():
-    print(app.static_folder)
-    return send_from_directory(app.static_folder, 'index.html')
+# @app.route('/')
+# def index():
+#     print(app.static_folder)
+#     return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/backend/getRecommendations', methods = ['GET'])
 def get_recommendations():
@@ -67,5 +68,43 @@ def get_recommendations():
         
         
     res = {'name': name, 'artist':artist, 'cover':albumArt, 'recommendations' : recs_json}
+    print(res)
+    return res
+
+
+
+@app.route('/backend/getArtistRecommendations', methods = ['GET'])
+def get_artist_recommendations():
+    songName = request.args.get('songName')
+    category = request.args.get('category')
+    if category == "":
+        category = 0
+    else:
+        category = int(category)
+    numRecs = request.args.get('numRecs')
+    if str(numRecs).isdigit():
+        numRecs = int(numRecs)
+    else:
+        numRecs = 3
+
+    print(songName, category, numRecs)
+    tracks = spotify.search(q=songName, type='track')
+    id = tracks['tracks']['items'][0]['id']
+    name = tracks['tracks']['items'][0]['name']
+    artist = tracks['tracks']['items'][0]['artists'][0]['name']
+    albumArt = tracks['tracks']['items'][0]['album']['images'][0]['url']
+    audioFeatures = spotify.audio_features(tracks=[id])[0]
+
+    print(audioFeatures)
+    df = pd.DataFrame([[audioFeatures['id'], 0, audioFeatures['acousticness'], audioFeatures['danceability'], audioFeatures['liveness'], audioFeatures['loudness'], audioFeatures['speechiness'], audioFeatures['tempo'], audioFeatures['valence'], '', artist, name]], columns=columns)
+    print(df)
+
+    # model time
+    popularity = predict_popularity(df)
+    fig = radar_top_n_song_features(df, category, numRecs)
+
+    html = mpld3.fig_to_html(fig)
+    print(html)
+    res = {'name': name, 'artist':artist, 'cover':albumArt, 'popularity' : popularity}
     print(res)
     return res

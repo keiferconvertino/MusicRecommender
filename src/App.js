@@ -3,6 +3,7 @@ import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 import Listeners from './components/listeners/Listeners'
+import Artists from './components/artists/Artists';
 
 function App() {
   return (
@@ -15,11 +16,11 @@ function App() {
           <div className="subheader">
             <div className = 'page-links'>
               <Link className = 'App-link' to="/">LISTENERS</Link>
-              <Link className = 'App-link' to="/profile">ARTISTS</Link>
+              <Link className = 'App-link' to="/artists">ARTISTS</Link>
             </div>
           </div>
         <Routes>
-          <Route path = "/artists"> 
+          <Route path = "/artists" element = {<Artists/>}> 
           </Route>
           <Route path = "/" element={<Listeners/>}> 
           </Route>
