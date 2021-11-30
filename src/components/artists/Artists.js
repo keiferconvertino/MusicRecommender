@@ -55,7 +55,7 @@ function Artists() {
 
                     </div>
                     <div className = "numRecsInput">
-                        <TextField label = "# of Songs to Compare" id="outlined-basic" onChange={handleNumRecsChange} value={numRecs} stylee = {{ marginLeft: 2, width: 30, marginRight : 2}} color ="success" variant="outlined" />
+                        <TextField label = "# of Songs to Compare" id="outlined-basic"  onChange={handleNumRecsChange} value={numRecs} style = {{width: 150,marginLeft: 2,marginRight : 2}} color ="success" variant="outlined" />
 
                     </div>
 
