@@ -61,7 +61,7 @@ img.albumCover {
 div.songRecommendation {
   display:flex;
   align-content: center;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   margin-top: 15px;
   font-size: 20px;
@@ -80,6 +80,23 @@ footer {
   height: calc(30px + 1vmin);
 
 }
+
+div.recs {
+  width: 60%;
+  display: inline-block;
+  /* align-self: center; */
+}
+
+div.gmm {
+  float:right;
+
+  margin-left: 15px;
+}
+div.knn {
+
+  float:left;
+}
+
 
 img.popularityFeatures {
   margin-top: 10px;
@@ -152,4 +169,42 @@ p.about {
   to {
     transform: rotate(360deg);
   }
+}
+
+
+
+.spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height:100px;
+  width:100px;
+  margin:0px -60px;
+  -webkit-animation: rotation .6s infinite linear;
+  -moz-animation: rotation .6s infinite linear;
+  -o-animation: rotation .6s infinite linear;
+  animation: rotation .6s infinite linear;
+  border-left:10px solid rgba(10, 80, 22, 0.555);
+  border-right:10px solid rgba(10, 80, 22, 0.555);
+  border-bottom:10px solid rgba(10, 80, 22, 0.555);
+  border-top:10px solid rgba(255, 255, 255, 0.8);
+  border-radius:100%;
+}
+
+
+@-webkit-keyframes rotation {
+  from {-webkit-transform: rotate(0deg);}
+  to {-webkit-transform: rotate(359deg);}
+}
+@-moz-keyframes rotation {
+  from {-moz-transform: rotate(0deg);}
+  to {-moz-transform: rotate(359deg);}
+}
+@-o-keyframes rotation {
+  from {-o-transform: rotate(0deg);}
+  to {-o-transform: rotate(359deg);}
+}
+@keyframes rotation {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(359deg);}
 }

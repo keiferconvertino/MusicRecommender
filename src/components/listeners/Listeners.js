@@ -6,22 +6,26 @@ import { TextField, Button, Grid, Item, Select, MenuItem, InputLabel, FormContro
 function Listeners() {
 
     const [category,setCategory] = useState(0)
+    const [loading,setLoading] = useState(false)
 
-    const [recommendedSongs,setRecommendedSongs] = useState([])
+    const [recommendedKnnSongs,setRecommendedKnnSongs] = useState([])
+    const [recommendedGmmSongs,setRecommendedGmmSongs] = useState([])
     const [songsFetched,setSongsFetched] = useState(false)
     const [search, setSearch] = useState([])
     const [numRecs, setNumRecs] = useState(3)
 
 
     const handleClick = async() => {
-
+        setLoading(true)
+        setSongsFetched(false)
 
         fetch('/backend/getRecommendations?songName='+search+"&category="+category+"&numRecs="+numRecs)
         .then(res => res.json()).then(res => {
-            setRecommendedSongs(res.recommendations)
+            setRecommendedKnnSongs(res.recommendations.knn)
+            setRecommendedGmmSongs(res.recommendations.gmm)
             setSearch(res.name + ' - ' + res.artist)
             setSongsFetched(true)
-            console.log(res)
+            setLoading(false)
         })
     }
 
@@ -111,17 +115,42 @@ function Listeners() {
             </div>
           </div>
           <div className="recommendedSongs">
+              {
+                  loading && (
+                    <div className = "spinner"></div>
+                  )
+              }
               {songsFetched && (
                   <div>
                       <h3>Our Recommendations:</h3>
-                    {recommendedSongs.map((recommendation,i) => {
-                        return (
-                            <div className = 'songRecommendation'>
-                                <a href = {recommendation.url}>{recommendation.name + " - " + recommendation.artist}</a>
-                                <img className = 'albumCover' alt ='' src = {recommendation.cover}></img>
+                      <div className = 'recs'>
+                    
+                        <div className = 'knn'>
+                            <h4>kNN:</h4>
+                            {recommendedKnnSongs.map((recommendation,i) => {
+                                return (
+                                    <div className = 'songRecommendation'>
+                                        <a href = {recommendation.url}>{recommendation.name + " - " + recommendation.artist}</a>
+                                        <img className = 'albumCover' alt ='' src = {recommendation.cover}></img>
+                                    </div>
+                                )
+                                })}
                             </div>
-                        )
-                    })}
+                            <div className = 'gmm'>
+                            <h4>GMM:</h4>
+
+                            
+                            {recommendedGmmSongs.map((recommendation,i) => {
+                                return (
+                                    <div className = 'songRecommendation'>
+                                        <a href = {recommendation.url}>{recommendation.name + " - " + recommendation.artist}</a>
+                                        <img className = 'albumCover' alt ='' src = {recommendation.cover}></img>
+                                    </div>
+                                )
+                                })}
+                            </div>
+                        </div>
+                    
                   </div>
               )}
           </div>

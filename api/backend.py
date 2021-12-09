@@ -51,11 +51,11 @@ def get_recommendations():
     print(df)
 
     # model time
-    recs = recommend_listener(df, category, numRecs+1)
+    recs, recs_gmm = recommend_listener(df, category, numRecs+1)
     
-    recs_json = []
+    recs_knn_json = []
     for (idx,rec) in recs.iterrows():
-        if rec['track_id'] == audioFeatures['id'] or len(recs_json) == numRecs:
+        if rec['track_id'] == audioFeatures['id'] or len(recs_knn_json) == numRecs:
             continue
         track = spotify.track(rec['track_id'])
         track_json = {
@@ -64,10 +64,23 @@ def get_recommendations():
             'cover': track['album']['images'][0]['url'],
             'url': track['external_urls']['spotify']
         }
-        recs_json.append(track_json)
+        recs_knn_json.append(track_json)
+
+    recs_gmm_json = []
+    for (idx,rec) in recs_gmm.iterrows():
+        if rec['track_id'] == audioFeatures['id'] or len(recs_gmm_json) == numRecs:
+            continue
+        track = spotify.track(rec['track_id'])
+        track_json = {
+            'name': rec['track_name'],
+            'artist': rec['artist_name'],
+            'cover': track['album']['images'][0]['url'],
+            'url': track['external_urls']['spotify']
+        }
+        recs_gmm_json.append(track_json)
         
         
-    res = {'name': name, 'artist':artist, 'cover':albumArt, 'recommendations' : recs_json}
+    res = {'name': name, 'artist':artist, 'cover':albumArt, 'recommendations' : {'knn' : recs_knn_json, 'gmm': recs_gmm_json}}
     print(res)
     return res
 

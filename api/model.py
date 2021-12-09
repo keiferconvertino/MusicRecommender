@@ -6,6 +6,8 @@ from scipy.sparse import csr_matrix
 import math
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neighbors import NearestNeighbors
+from sklearn.mixture import GaussianMixture
+
 import os
 
 CATEGORY_DICT = {0: "All", 1: "Acoustic", 2: "Chill", 3: "Dance", 4: "Happy", 5: "Loud", 6: "A Capella", 7: "Alternative", 8: "Blues", 9: "Classical", 10: "Country", 11: "Dance", 12: "Electronic", 13: "Folk", 14: "Hip-Hop", 15: "Indie", 16: "Jazz", 17: "Movie", 18: "Opera", 19: "Pop", 20: "R&B", 21: "Rap", 22: "Reggae", 23: "Reggaeton", 24: "Rock", 25: "Ska", 26: "Soul", 27: "Soundtrack", 28: "World"}
@@ -69,6 +71,11 @@ def recommend_listener(input_song:pd.DataFrame, category:int, num_songs_to_rec:i
   # Select the right data set 
   data = select_data(category)
 
+
+  if category== 0:
+    n_comps = 5
+  else:
+    n_comps = 5
   # Find k
   if num_songs_to_rec > 100:
     print("We can only recommend you 100 songs.")
@@ -90,13 +97,33 @@ def recommend_listener(input_song:pd.DataFrame, category:int, num_songs_to_rec:i
   input_song = input_song.drop(num_input_song.columns, axis=1)
   input_song[num_input_song.columns] = scaler.transform(num_input_song)
 
+  # GMM modeling 
+
+  gmm = GaussianMixture(n_components=n_comps).fit(data.drop(["track_id", "popularity", "genre", "artist_name", "track_name"], axis=1)) 
+
+  labels = gmm.predict_proba(data.drop(["track_id", "popularity", "genre", "artist_name", "track_name"], axis=1))
+  data_id = data["track_id"].reset_index()  
+  data_labels = pd.DataFrame(labels).reset_index()  
+  data_gmm = pd.concat([data_id, data_labels], axis = 1).drop(["index"], axis=1)
+  input_song_id = input_song["track_id"].reset_index() 
+  input_song_label = pd.DataFrame(gmm.predict_proba(input_song.drop(["track_id", "popularity", "genre", "artist_name", "track_name"], axis=1))).reset_index() 
+  input_gmm = pd.concat([input_song_id, input_song_label], axis = 1).drop(["index"], axis=1)
+
+  knn_gmm = NearestNeighbors(n_neighbors = k)
+  knn_gmm.fit(data_gmm.drop(["track_id"], axis=1))
+  gmm_neighbors = knn_gmm.kneighbors(input_gmm.drop(["track_id"], axis=1), return_distance=False)
+  df_rec_gmm = data.iloc[gmm_neighbors.tolist()[0]]
+
+  
   # KNN modeling 
   knn = NearestNeighbors(n_neighbors = k)
   knn.fit(data.drop(["track_id", "popularity", "genre", "artist_name", "track_name"], axis=1))
   neighbors = knn.kneighbors(input_song.drop(["track_id", "popularity", "genre", "artist_name", "track_name"], axis=1), return_distance=False)
 
+
   # Return a dataframe of rec 
   df_rec = data.iloc[neighbors.tolist()[0]]
-  return df_rec
+  return df_rec, df_rec_gmm
+
 
 
